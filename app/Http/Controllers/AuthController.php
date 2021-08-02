@@ -18,6 +18,7 @@ class AuthController extends Controller
             $hashed = bcrypt($request->get('password'));
             $user->password = $hashed;
             $user->save();
+            $user->sendEmailVerificationNotification();
             return response()->json($user);
         } catch (\Throwable $e) {
             return response()->json(["error" => $e->getMessage()], 500);
