@@ -33,8 +33,6 @@ class AuthController extends Controller
                 'password' => ['required'],
             ]);
 
-            \Log::info($credentials);
-
             if (Auth::attempt($credentials)) {
                 $request->session()->regenerate();
 
