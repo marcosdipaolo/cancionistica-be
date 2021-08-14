@@ -1,7 +1,9 @@
 <?php
 
 use App\Http\Controllers\NotificationController;
+use App\Http\Controllers\PostController;
 use App\Http\Controllers\VerificationController;
+use App\Models\Post;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
@@ -27,8 +29,10 @@ Route::middleware('auth:api')->get('/user', function (Request $request) {
 });
 
 
-// Notificastions
+// Notifications
 
 Route::get('email/verify/{id}', [VerificationController::class, 'verify'])->name('verification.verify');
 Route::get('email/resend', [VerificationController::class, 'resend'])->name('verification.resend');
 Route::post('contact-form', [NotificationController::class, 'contactForm']);
+
+Route::resource("posts", PostController::class);
