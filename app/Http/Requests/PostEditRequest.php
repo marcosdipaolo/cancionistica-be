@@ -13,7 +13,6 @@ class PostEditRequest extends FormRequest
      */
     public function authorize(): bool
     {
-        \Log::info($this->all());
         return true;
     }
 
