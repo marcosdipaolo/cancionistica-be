@@ -7,6 +7,9 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 
+/**
+ * @method static PostCategory find(int $id)
+ */
 class PostCategory extends Model
 {
     use HasFactory, UuidTrait;

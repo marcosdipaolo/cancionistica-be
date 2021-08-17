@@ -28,7 +28,7 @@ class PostCreateRequest extends FormRequest
             "title" => "required|string|min:2",
             "sub_title" => "required|string|min:2",
             "image" => "required|file|mimetypes:image/jpeg,image/png",
-            "category_id" => "nullable|uuid",
+            "post_category_id" => "nullable|uuid",
             "content" => "required|string|min:10"
         ];
     }
@@ -38,7 +38,7 @@ class PostCreateRequest extends FormRequest
      */
     public function hasCategory(): bool
     {
-        return !!$this->get("category_id");
+        return $this->has("post_category_id");
     }
 
     /**
@@ -46,7 +46,7 @@ class PostCreateRequest extends FormRequest
      */
     public function getCategoryId(): string | null
     {
-        return $this->get("category_id");
+        return $this->get("post_category_id");
     }
 
     /**
@@ -54,6 +54,6 @@ class PostCreateRequest extends FormRequest
      */
     public function getImage(): UploadedFile
     {
-        return $this->get("image");
+        return $this->file("image");
     }
 }

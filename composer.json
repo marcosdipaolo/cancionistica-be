@@ -13,6 +13,7 @@
         "fideloper/proxy": "^4.4",
         "fruitcake/laravel-cors": "^2.0",
         "guzzlehttp/guzzle": "^7.0.1",
+        "intervention/image": "^2.6",
         "itsgoingd/clockwork": "^5.1",
         "laravel/framework": "^8.40",
         "laravel/sanctum": "^2.11",
@@ -35,7 +36,8 @@
     },
     "autoload-dev": {
         "psr-4": {
-            "Tests\\": "tests/"
+            "Tests\\": "tests/",
+            "Cancionistica\\": "src"
         }
     },
     "scripts": {

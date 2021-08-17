@@ -21,6 +21,8 @@ class PostEditRequest extends PostCreateRequest
      */
     public function rules(): array
     {
-        return parent::rules();
+        return array_merge(parent::rules(), [
+            "image" => "nullable|file|mimetypes:image/jpeg,image/png"
+        ]);
     }
 }
