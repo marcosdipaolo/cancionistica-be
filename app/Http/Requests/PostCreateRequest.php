@@ -3,6 +3,7 @@
 namespace App\Http\Requests;
 
 use Illuminate\Foundation\Http\FormRequest;
+use Illuminate\Http\UploadedFile;
 
 class PostCreateRequest extends FormRequest
 {
@@ -27,7 +28,32 @@ class PostCreateRequest extends FormRequest
             "title" => "required|string|min:2",
             "sub_title" => "required|string|min:2",
             "image" => "required|file|mimetypes:image/jpeg,image/png",
+            "category_id" => "nullable|uuid",
             "content" => "required|string|min:10"
         ];
+    }
+
+    /**
+     * @return bool
+     */
+    public function hasCategory(): bool
+    {
+        return !!$this->get("category_id");
+    }
+
+    /**
+     * @return string|null
+     */
+    public function getCategoryId(): string | null
+    {
+        return $this->get("category_id");
+    }
+
+    /**
+     * @return UploadedFile
+     */
+    public function getImage(): UploadedFile
+    {
+        return $this->get("image");
     }
 }

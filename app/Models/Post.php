@@ -5,7 +5,7 @@ namespace App\Models;
 use App\Models\Traits\UuidTrait;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
-use Illuminate\Database\Eloquent\Relations\BelongsToMany;
+use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\MorphOne;
 
 class Post extends Model
@@ -14,9 +14,9 @@ class Post extends Model
 
     protected $guarded = [];
 
-    public function categories(): BelongsToMany
+    public function categories(): BelongsTo
     {
-        return $this->belongsToMany(PostCategory::class);
+        return $this->belongsTo(PostCategory::class);
     }
 
     public function image(): MorphOne

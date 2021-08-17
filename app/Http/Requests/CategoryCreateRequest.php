@@ -2,7 +2,9 @@
 
 namespace App\Http\Requests;
 
-class PostEditRequest extends PostCreateRequest
+use Illuminate\Foundation\Http\FormRequest;
+
+class CategoryCreateRequest extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.
@@ -21,6 +23,13 @@ class PostEditRequest extends PostCreateRequest
      */
     public function rules(): array
     {
-        return parent::rules();
+        return [
+            "name" => "required|string|min:2"
+        ];
+    }
+
+    public function getName(): string
+    {
+        return $this->get("name");
     }
 }
