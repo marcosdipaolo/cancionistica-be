@@ -1,10 +1,6 @@
 <?php
 
-use App\Http\Controllers\NotificationController;
-use App\Http\Controllers\PostCategoryController;
-use App\Http\Controllers\PostController;
-use App\Http\Controllers\VerificationController;
-use Illuminate\Http\Request;
+use App\Http\Controllers;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -21,9 +17,11 @@ use Illuminate\Support\Facades\Route;
 
 // Notifications
 
-Route::get('email/verify/{id}', [VerificationController::class, 'verify'])->name('verification.verify');
-Route::get('email/resend', [VerificationController::class, 'resend'])->name('verification.resend');
-Route::post('contact-form', [NotificationController::class, 'contactForm']);
+Route::get('email/verify/{id}', [Controllers\VerificationController::class, 'verify'])->name('verification.verify');
+Route::get('email/resend', [Controllers\VerificationController::class, 'resend'])->name('verification.resend');
+Route::post('contact-form', [Controllers\NotificationController::class, 'contactForm']);
+
+Route::post('payments/{method}', [Controllers\PaymentController::class, 'makePayment']);
 
 
 // resources
