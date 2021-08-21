@@ -12,6 +12,7 @@ class AppServiceProvider extends ServiceProvider
 
     public array $bindings = [
         Apis\ImageableApi::class => Services\ImageableService::class,
+        Apis\PaymentApi::class => Services\PaymentService::class,
     ];
 
 
