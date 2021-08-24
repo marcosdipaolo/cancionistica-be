@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Http\Requests\PaymentRequest;
 use Cancionistica\Apis\PaymentApi;
 use Illuminate\Http\JsonResponse;
+use Illuminate\Http\Request;
 use Illuminate\Http\Response;
 
 class PaymentController extends Controller
@@ -13,13 +14,18 @@ class PaymentController extends Controller
     {
     }
 
-    public function makePayment(PaymentRequest $request, string $method): Response | JsonResponse
+    public function makePayment(PaymentRequest $request, string $method): Response|JsonResponse
     {
         try {
-            $this->paymentApi->initializePayment($method, $request);
-            return response()->noContent(200);
-        } catch(\Throwable $e) {
+            $data = $this->paymentApi->initializePayment($method, $request);
+            return response()->json(compact("data"));
+        } catch (\Throwable $e) {
+            logger()->error($e->getMessage());
             return response()->json(["error" => $e->getMessage()]);
         }
+    }
+
+    public function mercadopagoCallback(Request $request) {
+        logger()->info(json_encode($request->all()));
     }
 }

@@ -25,7 +25,7 @@ class ImageableService implements ImageableApi
             $this->resizeImage($imageSize, $interventionImage);
             logger()->debug($imageSize->getSize());
             $this->createImagesFolder();
-            $path = "images/" . Uuid::uuid() . '.' . $file->getClientOriginalExtension();
+            $path = "images/blog/" . Uuid::uuid() . '.' . $file->getClientOriginalExtension();
             $interventionImage->save(Storage::disk('public')->path($path));
             $this->saveImageModel($imageSize, $path, $imageable);
         });
@@ -58,8 +58,11 @@ class ImageableService implements ImageableApi
 
     private function createImagesFolder(): void
     {
-        if (!Storage::disk('public')->exists('images')) {
-            Storage::disk('public')->makeDirectory('images');
+        if (!Storage::disk('public')->exists('images/blog')) {
+            Storage::disk('public')->makeDirectory('images/blog');
+        }
+        if (!Storage::disk('public')->exists('images/courses')) {
+            Storage::disk('public')->makeDirectory('images/courses');
         }
     }
 

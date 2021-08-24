@@ -6,6 +6,7 @@ use Cancionistica\Apis\PaymentApi;
 use Cancionistica\DataContracts\ProductData;
 use Cancionistica\Services\PaymentStrategy\PaymentStrategy;
 use Cancionistica\ValueObjects\PaymentMethod;
+use MercadoPago\Preference;
 
 class PaymentService implements PaymentApi
 {
@@ -15,6 +16,6 @@ class PaymentService implements PaymentApi
     public function initializePayment(string $method, ProductData $data)
     {
         $strategy = PaymentStrategy::make(PaymentMethod::make($method));
-        $strategy->pay($data);
+        return $strategy->pay($data);
     }
 }

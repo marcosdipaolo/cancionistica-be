@@ -22,8 +22,12 @@ Route::get('email/resend', [Controllers\VerificationController::class, 'resend']
 Route::post('contact-form', [Controllers\NotificationController::class, 'contactForm']);
 
 Route::post('payments/{method}', [Controllers\PaymentController::class, 'makePayment']);
+Route::post('mercadopago/callback', [Controllers\PaymentController::class, 'mercadopagoCallback']);
 
 
 // resources
-Route::resource("posts", PostController::class);
-Route::resource("categories", PostCategoryController::class);
+Route::resource("posts", Controllers\PostController::class);
+Route::resource("categories", Controllers\PostCategoryController::class);
+
+// courses
+Route::get("courses", [Controllers\CourseController::class, "index"]);
