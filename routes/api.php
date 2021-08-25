@@ -31,3 +31,4 @@ Route::resource("categories", Controllers\PostCategoryController::class);
 
 // courses
 Route::get("courses", [Controllers\CourseController::class, "index"]);
+Route::get("courses/{course}", [Controllers\CourseController::class, "show"]);
