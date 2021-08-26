@@ -12,6 +12,7 @@ class PaymentController extends Controller
 {
     public function __construct(private PaymentApi $paymentApi)
     {
+        $this->middleware("auth:sanctum")->except(["mercadopagoCallback"]);
     }
 
     public function makePayment(PaymentRequest $request, string $method): Response|JsonResponse
@@ -21,7 +22,7 @@ class PaymentController extends Controller
             return response()->json(compact("data"));
         } catch (\Throwable $e) {
             logger()->error($e->getMessage());
-            return response()->json(["error" => $e->getMessage()]);
+            return response()->json(["error" => $e->getMessage(), "trace" => $e->getTraceAsString()]);
         }
     }
 

@@ -17,7 +17,7 @@ class MercadopagoPaymentStrategy extends PaymentStrategy
      * @return string
      * @throws Exception
      */
-    public function pay(ProductData $data)
+    public function pay(ProductData $data): string
     {
         $this->initializeSDK();
         $preference = $this->createPreference($data);
