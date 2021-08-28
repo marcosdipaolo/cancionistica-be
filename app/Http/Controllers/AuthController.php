@@ -11,6 +11,10 @@ use Illuminate\Support\Facades\Auth;
 
 class AuthController extends Controller
 {
+    /**
+     * @param RegisterUserRequest $request
+     * @return JsonResponse
+     */
     public function register(RegisterUserRequest $request): JsonResponse
     {
         try {
@@ -25,6 +29,10 @@ class AuthController extends Controller
         }
     }
 
+    /**
+     * @param LoginUserRequest $request
+     * @return JsonResponse
+     */
     public function login(LoginUserRequest $request): JsonResponse
     {
         try {
@@ -47,6 +55,10 @@ class AuthController extends Controller
         }
     }
 
+    /**
+     * @param Request $request
+     * @return JsonResponse
+     */
     public function logout(Request $request): JsonResponse
     {
         try {
@@ -57,8 +69,19 @@ class AuthController extends Controller
             $request->session()->regenerateToken();
 
             return response()->json(['message' => 'Logged out.']);
-        } catch(\Throwable $e) {
+        } catch (\Throwable $e) {
             return response()->json(['error' => $e->getMessage()], 500);
+        }
+    }
+
+    public function loggedUser(): JsonResponse
+    {
+        try {
+            return auth()->user()
+                ? response()->json(auth()->user())
+                : response()->json(null, 401);
+        } catch (\Throwable $e) {
+            return response()->json(["error" => $e->getMessage()], 500);
         }
     }
 }
