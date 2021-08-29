@@ -79,7 +79,7 @@ class AuthController extends Controller
         try {
             return auth()->user()
                 ? response()->json(auth()->user())
-                : response()->json(null, 401);
+                : response()->json(["error" => "unauthenticated"], 401);
         } catch (\Throwable $e) {
             return response()->json(["error" => $e->getMessage()], 500);
         }
