@@ -32,3 +32,8 @@ Route::resource("categories", Controllers\PostCategoryController::class);
 // courses
 Route::get("courses", [Controllers\CourseController::class, "index"]);
 Route::get("courses/{course}", [Controllers\CourseController::class, "show"]);
+
+// user / personalInfo
+Route::post("users/{user}/personal-info", [Controllers\PersonalInfoController::class, "store"]);
+Route::get("users/{user}/personal-info", [Controllers\PersonalInfoController::class, "show"]);
+Route::put("users/{user}/personal-info", [Controllers\PersonalInfoController::class, "update"]);

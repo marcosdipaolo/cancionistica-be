@@ -6,7 +6,6 @@ use Cancionistica\Apis\PaymentApi;
 use Cancionistica\DataContracts\ProductData;
 use Cancionistica\Services\PaymentStrategy\PaymentStrategy;
 use Cancionistica\ValueObjects\PaymentMethod;
-use MercadoPago\Preference;
 
 class PaymentService implements PaymentApi
 {
