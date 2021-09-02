@@ -9,6 +9,9 @@ use Illuminate\Database\Eloquent\Relations\HasOne;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 
+/**
+ * @property PersonalInfo personalInfo
+ */
 class User extends Authenticatable
 {
     use HasFactory, Notifiable, UuidTrait;

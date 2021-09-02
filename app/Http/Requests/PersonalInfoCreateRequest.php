@@ -28,8 +28,8 @@ class PersonalInfoCreateRequest extends FormRequest implements PersonalInfoData
             "first_name" => "required|string|min:2|max:50",
             "last_name" => "required|string|min:2|max:50",
             "phonenumber" => "required|string|min:7|max:50",
-            "address_line_1" => "nullable|string",
-            "address_line_2" => "nullable|string",
+            "address_line_one" => "nullable|string",
+            "address_line_two" => "nullable|string",
             "postcode" => "nullable|string|min:4|max:10",
             "city" => "nullable|string|min:2|max:50",
             "country" => "nullable|string|min:2|max:50",
@@ -50,11 +50,11 @@ class PersonalInfoCreateRequest extends FormRequest implements PersonalInfoData
     }
     public function getAddressLineOne(): string | null
     {
-        return $this->get("address_line_1");
+        return $this->get("address_line_one");
     }
     public function getAddressLineTwo(): string | null
     {
-        return $this->get("address_line_2");
+        return $this->get("address_line_two");
     }
     public function getPostcode(): string | null
     {

@@ -18,8 +18,8 @@ class CreatePersonalInfosTable extends Migration
             $table->string("first_name");
             $table->string("last_name");
             $table->string("phonenumber");
-            $table->string("address_line_1")->nullable();
-            $table->string("address_line_2")->nullable();
+            $table->string("address_line_one")->nullable();
+            $table->string("address_line_two")->nullable();
             $table->string("postcode")->nullable();
             $table->string("city")->nullable();
             $table->string("country")->nullable();

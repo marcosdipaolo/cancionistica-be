@@ -23,7 +23,7 @@ class PersonalInfoController extends Controller
     public function store(User $user, PersonalInfoCreateRequest $request): JsonResponse
     {
         try {
-            if($user->personalInfo) {
+            if ($user->personalInfo) {
                 return response()->json(["error" => "User already has his personal info saved"], 409);
             }
             $user->personalInfo()->create($request->all());
@@ -35,9 +35,8 @@ class PersonalInfoController extends Controller
 
     public function update(User $user, PersonalInfoCreateRequest $request): JsonResponse
     {
-        /** @var PersonalInfo $personalInfo */
         $personalInfo = $user->personalInfo;
-        if(!$personalInfo) {
+        if (!$personalInfo) {
             return response()->json(["error" => "Information not found for that user"], 404);
         }
         $personalInfo->fill($request->all());
