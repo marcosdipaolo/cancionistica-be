@@ -2,10 +2,11 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\MPCallbackRequest;
 use App\Http\Requests\PaymentRequest;
+use App\Models\Payment;
 use Cancionistica\Apis\PaymentApi;
 use Illuminate\Http\JsonResponse;
-use Illuminate\Http\Request;
 use Illuminate\Http\Response;
 
 class PaymentController extends Controller
@@ -21,12 +22,12 @@ class PaymentController extends Controller
             $data = $this->paymentApi->initializePayment($method, $request);
             return response()->json(compact("data"));
         } catch (\Throwable $e) {
-            logger()->error($e->getMessage());
-            return response()->json(["error" => $e->getMessage(), "trace" => $e->getTraceAsString()]);
+            return response()->json(["error" => $e->getMessage(), "trace" => $e->getTraceAsString()], 500);
         }
     }
 
-    public function mercadopagoCallback(Request $request) {
-        logger()->info(json_encode($request->all()));
+    public function mercadopagoCallback(MPCallbackRequest $request)
+    {
+        Payment::create($request->all());
     }
 }

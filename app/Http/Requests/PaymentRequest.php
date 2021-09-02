@@ -25,31 +25,16 @@ class PaymentRequest extends FormRequest implements ProductData
     public function rules(): array
     {
         return [
-            "productId" => "required|uuid",
-            "productName" => "required|string",
-            "productPrice" => "required|numeric",
-            "productQuantity" => "required|numeric",
+            "items" => "required|array|min:1",
+            "items.*.id" => "required|uuid",
+            "items.*.title" => "required|string",
+            "items.*.price" => "required|numeric",
+            "items.*.quantity" => "required|numeric",
         ];
     }
 
-    public function getProductId(): string
+    public function getItems(): array
     {
-        return $this->get("productId");
+        return $this->get("items");
     }
-
-    public function getProductName(): string
-    {
-        return $this->get("productName");
-    }
-
-    public function getProductPrice(): string
-    {
-        return $this->get("productPrice");
-    }
-
-    public function getProductQuantity(): int
-    {
-        return $this->get("productQuantity");
-    }
-
 }

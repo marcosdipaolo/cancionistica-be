@@ -32,7 +32,7 @@ class MercadopagoPaymentStrategy extends PaymentStrategy
     private function createPreference(ProductData $data): Preference
     {
         $preference = new Preference();
-        $preference->items = [$this->getItem($data)];
+        $preference->items = $this->getItems($data);
         $preference->payer = $this->getPayer();
         $callbackUrl = config("app.frontend_url");
         $preference->back_urls = [
@@ -55,17 +55,21 @@ class MercadopagoPaymentStrategy extends PaymentStrategy
 
     /**
      * @param ProductData $data
-     * @return Item
+     * @return Item[]
      */
-    private function getItem(ProductData $data): Item
+    private function getItems(ProductData $data): array
     {
-        $item = new Item();
-        $item->title = $data->getProductName();
-        $item->id = $data->getProductId();
-        $item->quantity = $data->getProductQuantity();
-        $item->unit_price = $data->getProductPrice();
-        $item->currency_id = "ARS";
-        return $item;
+        $items = [];
+        foreach($data->getItems() as $product) {
+            $item = new Item();
+            $item->title = $product["title"];
+            $item->id = $product["id"];
+            $item->quantity = $product["quantity"];
+            $item->unit_price = $product["price"];
+            $item->currency_id = "ARS";
+            array_push($items, $item);
+        }
+        return $items;
     }
 
     /**

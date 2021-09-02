@@ -2,10 +2,10 @@
 
 namespace Cancionistica\DataContracts;
 
+/**
+ * @method all()
+ */
 interface ProductData
 {
-    public function getProductId(): string;
-    public function getProductName(): string;
-    public function getProductPrice(): string;
-    public function getProductQuantity(): int;
+    public function getItems(): array;
 }
