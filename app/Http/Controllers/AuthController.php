@@ -84,4 +84,15 @@ class AuthController extends Controller
             return response()->json(["error" => $e->getMessage()], 500);
         }
     }
+
+    public function emailExists(string $email): JsonResponse
+    {
+        try {
+            $user = User::where("email", $email)->first();
+            $status = $user ? 200 : 404;
+            return response()->json(!!$user, $status);
+        } catch(\Throwable $e){
+            return response()->json(["error" => $e->getMessage()], 500);
+        }
+    }
 }
