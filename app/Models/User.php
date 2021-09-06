@@ -3,6 +3,8 @@
 namespace App\Models;
 
 use App\Models\Traits\UuidTrait;
+use App\Notifications\CustomResetPasswordNotification;
+use Illuminate\Auth\Passwords\CanResetPassword;
 use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Relations\HasOne;
@@ -11,10 +13,11 @@ use Illuminate\Notifications\Notifiable;
 
 /**
  * @property PersonalInfo personalInfo
+ * @method static find(string $id)
  */
-class User extends Authenticatable
+class User extends Authenticatable implements \Illuminate\Contracts\Auth\CanResetPassword
 {
-    use HasFactory, Notifiable, UuidTrait;
+    use HasFactory, Notifiable, UuidTrait, CanResetPassword;
 
     /**
      * The attributes that are mass assignable.
@@ -49,5 +52,12 @@ class User extends Authenticatable
     public function personalInfo(): HasOne
     {
         return $this->hasOne(PersonalInfo::class);
+    }
+
+    public function sendPasswordResetNotification($token)
+    {
+        $frontendUrl = config("app.frontend_url");
+        $url =  "{$frontendUrl}/reset-password/{$token}";
+        $this->notify(new CustomResetPasswordNotification($url));
     }
 }
