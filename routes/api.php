@@ -21,8 +21,10 @@ Route::get('email/verify/{id}', [Controllers\VerificationController::class, 'ver
 Route::get('email/resend', [Controllers\VerificationController::class, 'resend'])->name('verification.resend');
 Route::post('contact-form', [Controllers\NotificationController::class, 'contactForm']);
 
+// payments / orders
 Route::post('payments/{method}', [Controllers\PaymentController::class, 'makePayment']);
 Route::post('mercadopago/callback', [Controllers\PaymentController::class, 'mercadopagoCallback']);
+Route::get("orders", [Controllers\OrderController::class, "getOrders"]);
 
 
 // resources

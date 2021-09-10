@@ -2,6 +2,7 @@
 
 namespace Cancionistica\Services\PaymentStrategy\Mercadopago;
 
+use Cancionistica\Apis\OrderApi;
 use Cancionistica\DataContracts\ProductData;
 use Cancionistica\Services\PaymentStrategy\PaymentStrategy;
 use Exception;
@@ -12,6 +13,10 @@ use MercadoPago\SDK;
 
 class MercadopagoPaymentStrategy extends PaymentStrategy
 {
+    public function __construct(private OrderApi $orderApi)
+    {
+
+    }
     /**
      * @param ProductData $data
      * @return string
@@ -22,6 +27,7 @@ class MercadopagoPaymentStrategy extends PaymentStrategy
         $this->initializeSDK();
         $preference = $this->createPreference($data);
         $preference->save();
+        $this->orderApi->createOrder($data->getItems(), $preference->id);
         return $preference->id;
     }
 

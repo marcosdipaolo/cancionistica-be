@@ -7,6 +7,7 @@ use App\Http\Requests\RegisterUserRequest;
 use App\Models\User;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
+use Illuminate\Http\Response;
 use Illuminate\Support\Facades\Auth;
 
 class AuthController extends Controller
@@ -23,7 +24,7 @@ class AuthController extends Controller
             $user->password = $hashed;
             $user->save();
             $user->sendEmailVerificationNotification();
-            return response()->json($user);
+            return response()->json($user->load("personalInfo"));
         } catch (\Throwable $e) {
             return response()->json(["error" => $e->getMessage()], 500);
         }
@@ -40,7 +41,7 @@ class AuthController extends Controller
 
             if (Auth::attempt($credentials)) {
                 $request->session()->regenerate();
-                return response()->json(auth()->user());
+                return response()->json(User::with("personalInfo")->find(auth()->id()));
             }
 
             return response()->json([
@@ -74,7 +75,7 @@ class AuthController extends Controller
     {
         try {
             return auth()->user()
-                ? response()->json(User::with(["personalInfo"])->where("id", auth()->id())->first())
+                ? response()->json(User::with(["personalInfo"])->find(auth()->id()))
                 : response()->json(["error" => "unauthenticated"], 401);
         } catch (\Throwable $e) {
             return response()->json(["error" => $e->getMessage()], 500);
@@ -90,5 +91,12 @@ class AuthController extends Controller
         } catch(\Throwable $e){
             return response()->json(["error" => $e->getMessage()], 500);
         }
+    }
+
+    public function isAdmin(): Response
+    {
+        return (config("app.admin.email") === auth()->user()?->email)
+            ? response(null, 200)
+            : response(null, 403);
     }
 }

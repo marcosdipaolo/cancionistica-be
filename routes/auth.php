@@ -13,3 +13,4 @@ Route::post("forgot-password", [Controllers\ResetPasswordController::class, "for
 Route::post("reset-password", [Controllers\ResetPasswordController::class, "reset"]);
 Route::post("change-password", [Controllers\ResetPasswordController::class, "change"]);
 Route::post("password-matches", [Controllers\ResetPasswordController::class, "passwordMatches"]);
+Route::get("is-admin", [Controllers\AuthController::class, "isAdmin"]);

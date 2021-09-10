@@ -28,6 +28,18 @@ class PaymentController extends Controller
 
     public function mercadopagoCallback(MPCallbackRequest $request)
     {
-        Payment::create($request->all());
+        Payment::create($request->only(
+            [
+                "collection_id",
+                "collection_status",
+                "payment_id",
+                "status",
+                "payment_type",
+                "merchant_order_id",
+                "preference_id",
+                "site_id",
+                "processing_mode"
+            ]
+        ));
     }
 }

@@ -14,7 +14,7 @@ class CreatePaymentsTable extends Migration
     public function up()
     {
         Schema::create('payments', function (Blueprint $table) {
-            $table->id();
+            $table->uuid("id");
             $table->string("collection_id");
             $table->string("collection_status");
             $table->string("payment_id");
@@ -24,6 +24,7 @@ class CreatePaymentsTable extends Migration
             $table->string("preference_id");
             $table->string("site_id");
             $table->string("processing_mode");
+            $table->unique("preference_id");
             $table->timestamps();
         });
     }

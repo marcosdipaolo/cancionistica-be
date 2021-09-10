@@ -14,7 +14,7 @@ class PostController extends Controller
 {
     public function __construct(public ImageableApi $imageableApi)
     {
-//        $this->middleware("auth:sanctum")->only(["store", "update", "delete"]);
+        $this->middleware("admin")->only(["store", "update", "destroy"]);
     }
 
     /**
@@ -23,7 +23,7 @@ class PostController extends Controller
     public function index(): JsonResponse
     {
         try {
-            return response()->json(Post::with(["images", "postCategory"])->get());
+            return response()->json(Post::with(["images", "postCategory"])->orderByDesc("created_at")->cursorPaginate(5));
         } catch (\Throwable $e) {
             return response()->json(["error" => $e->getMessage(), "trace" => $e->getTrace()]);
         }

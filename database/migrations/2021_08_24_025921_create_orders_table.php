@@ -17,6 +17,7 @@ class CreateOrdersTable extends Migration
             $table->uuid("id");
             $table->string("preference_id");
             $table->foreignUuid("user_id");
+            $table->unique(["preference_id"]);
             $table->timestamps();
         });
     }
