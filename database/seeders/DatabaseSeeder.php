@@ -4,6 +4,7 @@ namespace Database\Seeders;
 
 use App\Models\Course;
 use Cancionistica\ValueObjects\ImageSize;
+use Carbon\Carbon;
 use Faker\Provider\Uuid;
 use Illuminate\Database\Seeder;
 use Illuminate\Support\Facades\DB;
@@ -23,16 +24,25 @@ class DatabaseSeeder extends Seeder
                 "name" => config("app.admin.name"),
                 "email" => config("app.admin.email"),
                 "password" => bcrypt("11111111"),
+                "email_verified_at" => Carbon::now()
             ],[
                 "id" => Uuid::uuid(),
                 "name" => "Mario Bros",
                 "email" => "mario@bros.com",
-                "password" => bcrypt("11111111")
+                "password" => bcrypt("11111111"),
+                "email_verified_at" => Carbon::now()
             ],[
                 "id" => Uuid::uuid(),
                 "name" => "TETE4700609",
                 "email" => "test_user_38642520@testuser.com",
-                "password" => bcrypt("11111111")
+                "password" => bcrypt("11111111"),
+                "email_verified_at" => Carbon::now()
+            ],[
+                "id" => Uuid::uuid(),
+                "name" => "TESTJTYPXFL5",
+                "email" => "test_user_79249952@testuser.com",
+                "password" => bcrypt("11111111"),
+                "email_verified_at" => Carbon::now()
             ],
         ]);
         DB::table("post_categories")->insert([
@@ -52,7 +62,7 @@ class DatabaseSeeder extends Seeder
                 "size" => ImageSize::FULL
             ]);
             $course->images()->create([
-                "path" => "images/courses/cancionistica-{$imageIndex}.jpg",
+                "path" => "images/courses/cancionistica-{$imageIndex}-thumb.jpg",
                 "size" => ImageSize::THUMBNAIL
             ]);
         });

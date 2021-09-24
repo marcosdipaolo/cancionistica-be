@@ -62,6 +62,8 @@ return [
 
     'asset_url' => env('ASSET_URL', null),
 
+    'encryption_passphrase' => env("ENCRYPTION_PASSPHRASE"),
+
     /*
     |--------------------------------------------------------------------------
     | Application Timezone

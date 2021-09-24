@@ -5,13 +5,22 @@ namespace App\Http\Controllers;
 use App\Http\Requests\LoginUserRequest;
 use App\Http\Requests\RegisterUserRequest;
 use App\Models\User;
+use Cancionistica\Apis\EncryptionApi;
+use Exception;
+use Illuminate\Contracts\Foundation\Application;
+use Illuminate\Contracts\Routing\ResponseFactory;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
 use Illuminate\Http\Response;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\DB;
 
 class AuthController extends Controller
 {
+    public function __construct(private EncryptionApi $encryptionApi)
+    {
+    }
+
     /**
      * @param RegisterUserRequest $request
      * @return JsonResponse
@@ -88,7 +97,7 @@ class AuthController extends Controller
             $user = User::where("email", $email)->first();
             $status = $user ? 200 : 404;
             return response()->json(!!$user, $status);
-        } catch(\Throwable $e){
+        } catch (\Throwable $e) {
             return response()->json(["error" => $e->getMessage()], 500);
         }
     }
@@ -98,5 +107,29 @@ class AuthController extends Controller
         return (config("app.admin.email") === auth()->user()?->email)
             ? response(null, 200)
             : response(null, 403);
+    }
+
+    /**
+     * @return Response|Application|ResponseFactory
+     * @throws Exception
+     */
+    public function emails(): Response|Application|ResponseFactory
+    {
+        $emails = DB::table("users")->select("email")->get()->map(function ($emailObj) {
+            return $emailObj->email;
+        });
+        $passphrase = config("app.encryption_passphrase");
+        $encrypted = $this->encryptionApi->encrypt($passphrase, $emails);
+        return response($encrypted);
+    }
+
+    /**
+     * @return string
+     * @throws Exception
+     */
+    public function password(): string
+    {
+        $passphrase = config("app.encryption_passphrase");
+        return $this->encryptionApi->encrypt($passphrase, auth()->user()?->getAuthPassword());
     }
 }

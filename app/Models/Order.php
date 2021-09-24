@@ -23,4 +23,24 @@ class Order extends Model
     {
         return $this->belongsTo(User::class);
     }
+
+    public function getPayment()
+    {
+        return Payment::where("preference_id", $this->preference_id)->first();
+    }
+
+    /**
+     * Only for maintenance
+     * @return int
+     */
+    public static function clearPaymentlessOrders(): int {
+        $count = 0;
+        static::all()->each(function(self $order) use (&$count) {
+            if (!$order->getPayment()) {
+                $count++;
+                $order->delete();
+            }
+        });
+        return $count;
+    }
 }

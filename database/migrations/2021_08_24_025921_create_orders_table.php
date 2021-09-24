@@ -16,6 +16,7 @@ class CreateOrdersTable extends Migration
         Schema::create('orders', function (Blueprint $table) {
             $table->uuid("id");
             $table->string("preference_id");
+            $table->float("amount", 8, 2);
             $table->foreignUuid("user_id");
             $table->unique(["preference_id"]);
             $table->timestamps();

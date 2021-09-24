@@ -17,7 +17,7 @@ use Illuminate\Support\Facades\Route;
 
 // Notifications
 
-Route::get('email/verify/{id}', [Controllers\VerificationController::class, 'verify'])->name('verification.verify');
+Route::get('email/verify/{id}/{hash}', [Controllers\VerificationController::class, 'verify'])->name('verification.verify');
 Route::get('email/resend', [Controllers\VerificationController::class, 'resend'])->name('verification.resend');
 Route::post('contact-form', [Controllers\NotificationController::class, 'contactForm']);
 
@@ -25,6 +25,7 @@ Route::post('contact-form', [Controllers\NotificationController::class, 'contact
 Route::post('payments/{method}', [Controllers\PaymentController::class, 'makePayment']);
 Route::post('mercadopago/callback', [Controllers\PaymentController::class, 'mercadopagoCallback']);
 Route::get("orders", [Controllers\OrderController::class, "getOrders"]);
+Route::get("orders-all", [Controllers\OrderController::class, "getAllOrders"]);
 
 
 // resources
